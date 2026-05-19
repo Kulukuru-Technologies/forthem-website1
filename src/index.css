@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .scrollbar-hide {
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+@keyframes jumpUpBlocks {
+  0%   { transform: translate(0, 0); animation-timing-function: ease-out; }
+  15%  { transform: translate(9px, -45px); animation-timing-function: ease-in; }
+  33%  { transform: translate(18px, -28px); animation-timing-function: ease-out; }
+  48%  { transform: translate(27px, -73px); animation-timing-function: ease-in; }
+  66%  { transform: translate(36px, -56px); animation-timing-function: ease-out; }
+  81%  { transform: translate(45px, -101px); animation-timing-function: ease-in; }
+  100% { transform: translate(54px, -84px); }
+}
+
+.group:hover .animate-jump {
+  animation: jumpUpBlocks 1s forwards;
+}
+
+.group:not(:hover) .animate-jump {
+  transform: translate(0, 0);
+  transition: transform 0.5s ease-out;
+}
+
