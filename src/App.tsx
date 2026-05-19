@@ -49,24 +49,6 @@ export default function App() {
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    formData.append("form-name", "contact");
-    
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(formData as any).toString(),
-    }).then(() => {
-      setIsSubmitted(true);
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setIsModalOpen(false);
-      }, 10000);
-    }).catch(console.error);
-  };
-
   return (
     <div className="fixed inset-0 bg-[#fffdf7] p-2 md:p-3 font-sans selection:bg-[#1E4B99]/30 overflow-hidden flex flex-col">
       {/* Scrollable Canvas Frame */}
@@ -546,17 +528,11 @@ export default function App() {
 
                     <form 
                       className="space-y-4" 
-                      onSubmit={(e) => { 
-                        e.preventDefault(); 
-                        const formData = new FormData(e.currentTarget);
-                        formData.append("form-name", "contact");
-                        fetch("/", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                          body: new URLSearchParams(formData as any).toString(),
-                        }).then(() => setCtaStep('success')).catch(console.error);
-                      }}
+                      name="contact"
+                      method="POST"
+                      data-netlify="true"
                     >
+                       <input type="hidden" name="form-name" value="contact" />
                        <div className="space-y-1.5">
                           <label className="text-sm font-bold text-slate-700">Your name</label>
                           <input type="text" name="name" required className="w-full px-4 py-2.5 rounded-2xl border border-gray-200 bg-gray-50 focus:bg-[#FFFFFF] focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] outline-none transition-all text-[#102142] font-medium" />
@@ -705,7 +681,8 @@ export default function App() {
                       <p className="text-gray-500 font-medium">Share a few details so we can learn from parents like you and build ForThem thoughtfully.</p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form className="space-y-4" name="contact" method="POST" data-netlify="true">
+                      <input type="hidden" name="form-name" value="contact" />
                       <div className="relative">
                         <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input 
