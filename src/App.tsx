@@ -65,14 +65,14 @@ export default function App() {
                 className={`w-full flex items-center justify-between transition-all duration-300 ease-in-out mx-auto ${
                   isScrolled 
                     ? 'bg-[#FFFFFF] rounded-[50px] px-5 py-2.5 md:px-8 md:py-3 shadow-[0_12px_40px_rgba(0,0,0,0.08)] border border-black/5' 
-                    : 'bg-transparent rounded-none px-6 sm:px-8 md:px-16 lg:px-24 py-5 md:py-8 shadow-none border border-transparent'
+                    : 'bg-transparent rounded-none px-6 sm:px-8 md:px-16 lg:px-24 py-4 md:py-6 shadow-none border border-transparent'
                 }`}
                 style={{
                   maxWidth: isScrolled ? '1200px' : '100%'
                 }}
               >
                 <div className="flex items-center relative z-20">
-                  <img src="logo.png" alt="ForThem Logo" className={`w-auto object-contain mix-blend-multiply transition-all duration-500 ${isScrolled ? 'h-7 md:h-8' : 'h-10 md:h-14'}`} />
+                  <img src="logo.png" alt="ForThem Logo" className={`w-auto object-contain mix-blend-multiply transition-all duration-500 ${isScrolled ? 'h-7 md:h-8' : 'h-16 md:h-[80px] lg:h-[100px]'}`} />
                 </div>
                 
                 <div className="flex items-center relative z-20">
@@ -98,24 +98,24 @@ export default function App() {
         <section className="relative min-h-[100dvh] flex flex-col md:flex-row md:items-center overflow-hidden bg-[#fffdf7]">
           
           {/* Left Column - Text Content */}
-          <div className="w-full mx-auto px-6 sm:px-8 md:px-16 lg:px-24 pt-32 pb-8 md:py-0 relative z-20 order-1 md:order-none pointer-events-none">
-            <div className="flex flex-col items-start w-full md:w-[60%] lg:w-[45%] pointer-events-auto text-left mt-6 md:mt-24 lg:mt-32">
+          <div className="w-full mx-auto px-6 sm:px-8 md:px-16 lg:px-24 pt-24 lg:pt-32 pb-16 md:pb-0 relative z-20 order-1 md:order-none pointer-events-none flex flex-col justify-center h-full">
+            <div className="flex flex-col items-start w-full md:w-[60%] lg:w-[50%] xl:w-[45%] pointer-events-auto text-left mt-8 md:mt-16 lg:mt-8">
               <motion.h1 
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="text-3xl sm:text-[32px] md:text-4xl lg:text-[40px] font-black tracking-tight text-[#102142] mb-3 md:mb-5 leading-[1.1] text-left"
+                className="text-[48px] lg:text-[65px] font-bold tracking-tight text-[#102142] mb-4 md:mb-6 leading-[1.1] text-left"
               >
-                Build a dedicated financial <br className="hidden lg:block" /> base for your child
+                Build a dedicated <br /> financial base <br /> for your child
               </motion.h1>
 
               <motion.p 
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-sm sm:text-[15px] md:text-base text-[#1B4388] max-w-xl mb-6 md:mb-8 font-bold text-left leading-relaxed"
+                className="text-[19px] lg:text-[25px] text-[#102142] max-w-2xl mb-8 md:mb-10 font-normal text-left leading-[1.4]"
               >
-                You want to give your child a stronger start in life. <br className="hidden lg:block" /> We help you make it happen.
+                You want to give your child a stronger start in life. <br /> We help you make it happen.
               </motion.p>
 
               {/* Trigger Button */}
@@ -123,21 +123,22 @@ export default function App() {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="flex flex-col items-start gap-4"
+                className="flex flex-col items-start gap-4 mt-2 w-full"
               >
-                <motion.button
-                  onClick={() => setIsModalOpen(true)}
-                  whileHover={{ scale: 1.05, backgroundColor: '#1B4388' }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-[#173973] text-[#FFFFFF] px-10 py-5 rounded-2xl font-bold text-lg shadow-xl shadow-[#102142]/40 hover:shadow-2xl transition-all flex items-center gap-3 ring-4 ring-[#173973]/10"
-                >
-                  Show interest
-                  <ChevronRight className="w-6 h-6" />
-                </motion.button>
-                <p className="text-[10px] md:text-[11px] font-bold text-[#102142] flex items-center gap-2 mt-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#102142] animate-pulse" />
-                  Be the first to know when we launch
-                </p>
+                <div className="flex flex-col items-start w-fit">
+                  <motion.button
+                    onClick={() => setIsModalOpen(true)}
+                    whileHover={{ scale: 1.05, backgroundColor: '#142952' }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-[#102142] text-[#FFFFFF] px-10 py-3 lg:py-[14px] rounded-[2rem] font-semibold text-lg lg:text-[24px] shadow-md hover:bg-[#142952] hover:shadow-lg transition-all flex items-center justify-center gap-3 w-full"
+                  >
+                    Show interest
+                  </motion.button>
+                  <p className="text-[12px] lg:text-[16px] font-light text-[#102142]/80 flex items-center justify-start gap-2 mt-4 sm:mt-2 w-full lg:px-2">
+                    <Mail className="w-5 h-5 opacity-60" strokeWidth={1.5} />
+                    Be the first to know when we launch
+                  </p>
+                </div>
               </motion.div>
             </div>
           </div>
