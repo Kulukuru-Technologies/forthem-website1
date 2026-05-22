@@ -98,8 +98,8 @@ export default function App() {
         <section className="relative min-h-[100dvh] flex flex-col md:flex-row md:items-center overflow-hidden bg-[#fffdf7]">
           
           {/* Left Column - Text Content */}
-          <div className="w-full mx-auto px-6 sm:px-8 md:px-16 lg:px-24 pt-24 lg:pt-32 pb-16 md:pb-0 relative z-20 order-1 md:order-none pointer-events-none flex flex-col justify-center h-full">
-            <div className="flex flex-col items-start w-full md:w-[60%] lg:w-[50%] xl:w-[45%] pointer-events-auto text-left mt-8 md:mt-16 lg:mt-8">
+          <div className="w-full mx-auto px-6 sm:px-8 md:px-16 lg:px-24 pt-20 lg:pt-32 pb-4 md:pb-0 relative z-20 order-1 md:order-none pointer-events-none flex flex-col justify-center h-full">
+            <div className="flex flex-col items-start w-full md:w-[60%] lg:w-[50%] xl:w-[45%] pointer-events-auto text-left mt-0 md:mt-16 lg:mt-8">
               <motion.h1 
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -113,7 +113,7 @@ export default function App() {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-[19px] lg:text-[25px] text-[#102142] max-w-2xl mb-8 md:mb-10 font-normal text-left leading-[1.4]"
+                className="text-[19px] lg:text-[25px] text-[#102142] max-w-2xl mb-6 md:mb-10 font-normal text-left leading-[1.4]"
               >
                 You want to give your child a stronger start in life. <br /> We help you make it happen.
               </motion.p>
@@ -123,7 +123,7 @@ export default function App() {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="flex flex-col items-start gap-4 mt-2 w-full"
+                className="flex flex-col items-start gap-4 mt-1 w-full"
               >
                 <div className="flex flex-col items-start w-fit">
                   <motion.button
@@ -144,12 +144,12 @@ export default function App() {
           </div>
 
           {/* Right Column / Background - Graphic */}
-          <div className="relative flex-1 w-full md:absolute md:inset-0 z-0 order-2 md:order-none flex items-center justify-center">
+          <div className="relative flex-1 w-full md:absolute md:inset-0 z-0 order-2 md:order-none flex items-center justify-center -mt-8 md:mt-0">
             {/* Mobile / Tablet Image (< 768px) */}
             <img 
               src="/bg-mobile.png" 
               alt="Child's Future Investment Illustration Mobile"
-              className="block md:hidden relative w-full h-[60vh] object-cover object-bottom"
+              className="block md:hidden relative w-full h-[45vh] lg:h-auto object-cover object-bottom overflow-visible"
               onError={(e) => {
                 (e.target as HTMLImageElement).src = '/bg.png';
               }}
