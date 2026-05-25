@@ -72,7 +72,7 @@ export default function App() {
                 }}
               >
                 <div className="flex items-center relative z-20">
-                  <img src="logo.png" alt="ForThem Logo" className={`w-auto object-contain mix-blend-multiply transition-all duration-500 ${isScrolled ? 'h-7 md:h-8' : 'h-16 md:h-[80px] lg:h-[100px]'}`} />
+                  <img src="logo.png" alt="ForThem Logo" className={`w-auto object-contain mix-blend-multiply transition-all duration-500 flex-shrink-0 ${isScrolled ? 'h-9 md:h-12' : 'h-16 md:h-[80px] lg:h-[100px]'}`} />
                 </div>
                 
                 <div className="flex items-center relative z-20">
@@ -98,13 +98,13 @@ export default function App() {
         <section className="relative min-h-[100dvh] flex flex-col md:flex-row md:items-center overflow-hidden bg-[#fffdf7]">
           
           {/* Left Column - Text Content */}
-          <div className="w-full mx-auto px-6 sm:px-8 md:px-16 lg:px-24 pt-20 lg:pt-32 pb-4 md:pb-0 relative z-20 order-1 md:order-none pointer-events-none flex flex-col justify-center h-full">
-            <div className="flex flex-col items-start w-full md:w-[60%] lg:w-[50%] xl:w-[45%] pointer-events-auto text-left mt-0 md:mt-16 lg:mt-8">
+          <div className="w-full mx-auto px-6 sm:px-8 md:px-16 lg:px-24 pt-24 lg:pt-32 pb-4 md:pb-0 relative z-20 order-1 md:order-none pointer-events-none flex flex-col justify-center h-full">
+            <div className="flex flex-col items-start w-full md:w-[60%] lg:w-[50%] xl:w-[45%] pointer-events-auto text-left mt-2 md:mt-4 lg:mt-[-1rem]">
               <motion.h1 
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="text-[48px] lg:text-[65px] font-bold tracking-tight text-[#102142] mb-4 md:mb-6 leading-[1.1] text-left"
+                className="text-[32px] md:text-[40px] lg:text-[44px] font-extrabold tracking-tight text-[#102142] mb-5 leading-[1.12] text-left"
               >
                 Build a dedicated <br /> financial base <br /> for your child
               </motion.h1>
@@ -113,7 +113,7 @@ export default function App() {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-[19px] lg:text-[25px] text-[#102142] max-w-2xl mb-6 md:mb-10 font-normal text-left leading-[1.4]"
+                className="text-[16px] md:text-[18px] text-[#102142] max-w-xl mb-8 font-normal text-left leading-[1.5]"
               >
                 You want to give your child a stronger start in life. <br /> We help you make it happen.
               </motion.p>
@@ -123,19 +123,19 @@ export default function App() {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="flex flex-col items-start gap-4 mt-1 w-full"
+                className="flex flex-col items-start gap-4 mt-2 w-full md:-ml-2"
               >
                 <div className="flex flex-col items-start w-fit">
                   <motion.button
                     onClick={() => setIsModalOpen(true)}
                     whileHover={{ scale: 1.05, backgroundColor: '#142952' }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-[#102142] text-[#FFFFFF] px-10 py-3 lg:py-[14px] rounded-[2rem] font-semibold text-lg lg:text-[24px] shadow-md hover:bg-[#142952] hover:shadow-lg transition-all flex items-center justify-center gap-3 w-full"
+                    className="bg-[#102142] text-[#FFFFFF] py-[14px] rounded-[2rem] font-bold text-[17px] shadow-md hover:bg-[#142952] hover:shadow-lg transition-all flex items-center justify-center gap-3 w-[260px] md:w-[310px]"
                   >
                     Show interest
                   </motion.button>
-                  <p className="text-[12px] lg:text-[16px] font-light text-[#102142]/80 flex items-center justify-start gap-2 mt-4 sm:mt-2 w-full lg:px-2">
-                    <Mail className="w-5 h-5 opacity-60" strokeWidth={1.5} />
+                  <p className="text-[13px] md:text-[14px] font-medium text-[#102142]/70 flex items-center justify-start gap-2 mt-3.5 w-full md:px-1">
+                    <Mail className="w-[18px] h-[18px] opacity-60" strokeWidth={1.5} />
                     Be the first to know when we launch
                   </p>
                 </div>
@@ -149,7 +149,7 @@ export default function App() {
             <img 
               src="/bg-mobile.png" 
               alt="Child's Future Investment Illustration Mobile"
-              className="block md:hidden relative w-full h-[45vh] lg:h-auto object-cover object-bottom overflow-visible"
+              className="block md:hidden relative w-full h-auto max-h-[45vh] object-contain object-bottom overflow-visible"
               onError={(e) => {
                 (e.target as HTMLImageElement).src = '/bg.png';
               }}
@@ -169,21 +169,21 @@ export default function App() {
         </section>
 
       {/* Problem & Insights Section */}
-      <section className="bg-[#fffdf7] w-full relative z-10 pt-16 md:pt-20 pb-8 md:pb-10 overflow-hidden">
+      <section className="bg-[#fffdf7] w-full relative z-10 py-12 md:py-8 overflow-hidden min-h-[min(100dvh,800px)] flex flex-col justify-center">
 
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-8 z-10">
+        <div className="relative mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 z-10">
           
-          <div className="mx-auto max-w-4xl text-center mb-8 md:mb-10">
-            <h2 className="text-2xl md:text-3xl lg:text-3xl font-black text-[#102142] tracking-tight mb-4 leading-[1.15]">
+          <div className="mx-auto max-w-3xl text-center mb-6 md:mb-8">
+            <h2 className="text-3xl md:text-4xl font-black text-[#102142] tracking-tight mb-3 leading-tight">
               Are your savings actually becoming your child’s financial base?
             </h2>
-            <p className="text-base md:text-base text-gray-500 font-medium leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-gray-500 font-medium leading-relaxed max-w-2xl mx-auto">
               Money meant for your child is often scattered, mixed with your own finances, and doesn’t reach them when it matters most.
             </p>
           </div>
 
           <div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 w-full max-w-7xl mx-auto mt-6 mb-12 md:mb-16"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full mt-4"
           >
             {PROBLEM_CARDS.map((card, idx) => {
                return (
@@ -193,21 +193,21 @@ export default function App() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ delay: idx * 0.15, duration: 0.6, type: "spring", bounce: 0.4 }} 
-                    className="relative w-full rounded-[2rem] bg-[#FFFFFF]  p-3 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-2"
+                    className="relative w-full rounded-[1.5rem] bg-[#FFFFFF]  p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1"
                  >
                     {/* Top: Image Container */}
-                    <div className="relative w-full aspect-square rounded-3xl overflow-hidden mb-4 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
+                    <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 md:mb-4 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
                       <img 
                          src={card.image} 
                          alt={card.title} 
-                         className="absolute inset-0 w-full h-full object-cover scale-[1.12] mix-blend-multiply origin-top" 
+                         className="absolute inset-0 w-full h-full object-cover mix-blend-multiply origin-top" 
                          referrerPolicy="no-referrer" 
                       />
                     </div>
                     
                     {/* Bottom: Text Content */}
-                    <div className="flex flex-col px-3 pb-4 flex-1">
-                       <h3 className="text-xl md:text-2xl font-bold text-[#102142] mb-2 leading-[1.2] tracking-tight">
+                    <div className="flex flex-col px-3 pb-3 md:pb-4 flex-1">
+                       <h3 className="text-lg md:text-xl font-bold text-[#102142] mb-1.5 md:mb-2 leading-tight tracking-tight">
                          {card.title}
                        </h3>
                        <p className="text-gray-600 text-sm md:text-base font-medium leading-relaxed">
@@ -285,55 +285,55 @@ export default function App() {
       </section>
 
       {/* ForThem's Approach Section (3 Pillars) */}
-      <section className="bg-[#fffdf7] border-t border-gray-200 w-full min-h-screen flex flex-col justify-center relative z-10 py-12 md:py-20 overflow-hidden">
-        <div className="mx-auto w-full max-w-7xl px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-10 md:mb-14">
-            <div className="flex items-center justify-center text-[#1E4B99] font-bold text-sm md:text-base uppercase tracking-widest mb-4">
+      <section className="bg-[#fffdf7] border-t border-gray-200 w-full min-h-[min(100dvh,800px)] flex flex-col justify-center relative z-10 py-12 overflow-hidden">
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-6 md:mb-8">
+            <div className="flex items-center justify-center text-[#1E4B99] font-bold text-xs uppercase tracking-widest mb-1.5">
               <span>Your intent, our system</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black text-[#102142] tracking-tight mb-4 leading-[1.1]">
+            <h2 className="text-2xl md:text-3xl font-black text-[#102142] tracking-tight mb-1.5 leading-[1.1]">
               A dedicated financial base for your child, now possible.
             </h2>
-            <p className="text-lg md:text-xl text-gray-500 font-medium leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm md:text-base text-gray-500 font-medium leading-relaxed max-w-xl mx-auto">
               We help you build it step by step, so what you want for your child can take shape over time.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-2">
             {/* Pillar 1: One clear system */}
-            <div className="relative w-full rounded-[2rem] bg-[#FFFFFF] p-3 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-2">
-              <div className="relative w-full aspect-square rounded-3xl overflow-hidden mb-4 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
+            <div className="relative w-full rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1">
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-2 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
                  <img src="/pillar1.png" alt="One clear system" className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" />
               </div>
-              <div className="flex flex-col px-3 pb-4 flex-1 relative z-10">
-                <h3 className="text-xl md:text-2xl font-black text-[#102142] mb-2 tracking-tight">One clear system</h3>
-                <p className="text-gray-500 text-sm md:text-base font-medium leading-relaxed">
+              <div className="flex flex-col px-2 pb-2 flex-1 relative z-10">
+                <h3 className="text-base md:text-lg font-black text-[#102142] mb-1 tracking-tight">One clear system</h3>
+                <p className="text-gray-500 text-sm font-medium leading-relaxed">
                   All in one place with a clear goal, plan, and progress you can track.
                 </p>
               </div>
             </div>
 
             {/* Pillar 2: Truly dedicated for them */}
-            <div className="relative w-full rounded-[2rem] bg-[#FFFFFF] p-3 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-2">
-              <div className="relative w-full aspect-square rounded-3xl overflow-hidden mb-4 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
+            <div className="relative w-full rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1">
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-2 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
                  <img src="/pillar2.png" alt="Truly dedicated for them" className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" />
               </div>
-              <div className="flex flex-col px-3 pb-4 flex-1 relative z-10">
-                <h3 className="text-xl md:text-2xl font-black text-[#102142] mb-2 tracking-tight">Truly dedicated for them</h3>
-                <p className="text-gray-500 text-sm md:text-base font-medium leading-relaxed">
+              <div className="flex flex-col px-2 pb-2 flex-1 relative z-10">
+                <h3 className="text-base md:text-lg font-black text-[#102142] mb-1 tracking-tight">Truly dedicated for them</h3>
+                <p className="text-gray-500 text-sm font-medium leading-relaxed">
                   Separate from everyday finances and meant only for your child.
                 </p>
               </div>
             </div>
 
             {/* Pillar 3: There when it matters most */}
-            <div className="relative w-full rounded-[2rem] bg-[#FFFFFF] p-3 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-2">
-              <div className="relative w-full aspect-square rounded-3xl overflow-hidden mb-4 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
+            <div className="relative w-full rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1">
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-2 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
                  <img src="/pillar3.png" alt="There when it matters most" className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" />
               </div>
-              <div className="flex flex-col px-3 pb-4 flex-1 relative z-20">
-                <h3 className="text-xl md:text-2xl font-black text-[#102142] mb-2 tracking-tight">There when it matters most</h3>
-                <p className="text-gray-500 text-sm md:text-base font-medium leading-relaxed">
+              <div className="flex flex-col px-2 pb-2 flex-1 relative z-20">
+                <h3 className="text-base md:text-lg font-black text-[#102142] mb-1 tracking-tight">There when it matters most</h3>
+                <p className="text-gray-500 text-sm font-medium leading-relaxed">
                   Designed to support your child in life’s key moments and through the unexpected.
                 </p>
               </div>
@@ -346,19 +346,19 @@ export default function App() {
         {/* Features Section removed/replaced above; skipping How It Works to match strict spec */}
 
       {/* Trust Section - White Minimalist Style */}
-        <div className="w-full bg-[#fffdf7] pb-24 md:pb-32 px-6 pt-16 md:pt-24 relative z-10 overflow-hidden">
-          <div className="max-w-7xl mx-auto relative z-10">
+      <section className="w-full bg-[#fffdf7] min-h-[min(100dvh,750px)] py-12 px-4 sm:px-6 lg:px-8 relative z-10 overflow-hidden flex flex-col justify-center">
+        <div className="max-w-6xl mx-auto relative z-10 w-full">
             
-            <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-5xl font-black text-[#102142] tracking-tight mb-4 leading-tight">
+            <div className="text-center max-w-2xl mx-auto mb-6 md:mb-8">
+              <h2 className="text-2xl md:text-3xl font-black text-[#102142] tracking-tight mb-2 leading-tight">
                 Trust is built into everything we do
               </h2>
-              <p className="text-lg md:text-xl text-gray-500 font-medium">
+              <p className="text-base md:text-lg text-gray-500 font-medium">
                 With regulated partners, secure systems, and transparent processes.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-12">
               
               {/* Card 1: Regulated Partners */}
               <motion.div 
@@ -440,10 +440,10 @@ export default function App() {
           </div>
 
 
-        </div>
+        </section>
 
         {/* Final CTA Section */}
-        <section className="w-full relative z-10 bg-[#fffdf7]" id="cta-section">
+        <section className="w-full relative z-10 bg-[#fffdf7] min-h-[min(100dvh,800px)] flex flex-col justify-center" id="cta-section">
           <AnimatePresence mode="wait">
             {ctaStep === 'initial' ? (
               <motion.div
@@ -452,7 +452,7 @@ export default function App() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="bg-[#173973] w-full relative py-20 md:py-24 min-h-[70vh] flex flex-col items-center justify-center overflow-hidden"
+                className="bg-[#173973] w-full relative py-16 min-h-[min(100dvh,800px)] flex flex-col items-center justify-center overflow-hidden"
               >
                 
                 {/* Elegant Glowing Orbs - Staticized for performance */}
@@ -462,10 +462,10 @@ export default function App() {
                 <div className="max-w-4xl mx-auto px-6 text-center relative z-10 flex flex-col items-center">
 
 
-                  <h2 className="text-4xl md:text-6xl lg:text-[64px] font-black text-[#FFFFFF] tracking-tight mb-8 leading-[1.05] drop-shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
+                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#FFFFFF] tracking-tight mb-8 leading-[1.05] drop-shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
                     What you want for your child starts here
                   </h2>
-                  <p className="text-xl md:text-[22px] text-blue-50 font-medium mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)] relative z-10">
+                  <p className="text-xl md:text-2xl text-blue-50 font-medium mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)] relative z-10">
                     Show your interest today and be the first to know when ForThem launches.
                   </p>
                   
@@ -636,7 +636,7 @@ export default function App() {
              </div>
              
              <div className="flex flex-col items-center gap-4 border-t border-gray-200 pt-8 text-center mt-4">
-                <p className="text-[#102142]/50 text-[10px] md:text-xs max-w-3xl leading-relaxed">
+                <p className="text-[#102142]/50 text-xs max-w-3xl leading-relaxed">
                   Financial disclaimer: Investing in securities markets is subject to market risks. Read all the related documents carefully before investing. ForThem is a technology platform and not a registered investment advisor.
                 </p>
                 <p className="text-[#102142]/60 text-sm font-medium">
