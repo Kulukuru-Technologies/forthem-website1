@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronRight, Mail, X, User, Phone, MapPin, Baby, Target, Briefcase, CircleDashed, Building2, Lock, ShieldCheck, Eye, FileText, Award, TrendingUp, Shield, LogIn, ClipboardCheck, Wallet, ArrowRight, Star, CheckCircle2 } from "lucide-react";
 
@@ -25,6 +25,7 @@ export default function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
+  const [problemActiveIndex, setProblemActiveIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   
@@ -183,7 +184,15 @@ export default function App() {
           </div>
 
           <div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full mt-4"
+            className="flex md:grid flex-row md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-4 md:gap-6 lg:gap-8 w-full mt-4 pb-6 md:pb-0 scrollbar-hide -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0"
+            onScroll={(e) => {
+              if (window.innerWidth < 768) {
+                const scrollLeft = e.currentTarget.scrollLeft;
+                const childWidth = (e.currentTarget.firstChild as HTMLElement)?.offsetWidth || window.innerWidth * 0.85;
+                const index = Math.round(scrollLeft / childWidth);
+                setProblemActiveIndex(Math.min(PROBLEM_CARDS.length - 1, Math.max(0, index)));
+              }
+            }}
           >
             {PROBLEM_CARDS.map((card, idx) => {
                return (
@@ -193,7 +202,7 @@ export default function App() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ delay: idx * 0.15, duration: 0.6, type: "spring", bounce: 0.4 }} 
-                    className="relative w-full rounded-[1.5rem] bg-[#FFFFFF]  p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1"
+                    className="relative w-[85vw] md:w-full shrink-0 snap-center rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1"
                  >
                     {/* Top: Image Container */}
                     <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 md:mb-4 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
@@ -217,6 +226,18 @@ export default function App() {
                  </motion.div>
                );
             })}
+          </div>
+
+          {/* Mobile Pagination Dots */}
+          <div className="flex md:hidden justify-center items-center gap-2 mt-0 mb-4">
+            {PROBLEM_CARDS.map((_, idx) => (
+              <div 
+                key={idx} 
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  problemActiveIndex === idx ? "w-6 bg-[#102142]" : "w-1.5 bg-[#102142]/20"
+                }`}
+              />
+            ))}
           </div>
 
         </div>
