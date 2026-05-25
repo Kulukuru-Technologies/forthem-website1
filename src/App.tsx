@@ -124,9 +124,9 @@ export default function App() {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="flex flex-col items-start gap-4 mt-2 w-full md:-ml-2"
+                className="flex flex-col items-center md:items-start gap-4 mt-2 w-full md:-ml-2"
               >
-                <div className="flex flex-col items-start w-fit">
+                <div className="flex flex-col items-center md:items-start w-fit">
                   <motion.button
                     onClick={() => setIsModalOpen(true)}
                     whileHover={{ scale: 1.05, backgroundColor: '#142952' }}
@@ -135,7 +135,7 @@ export default function App() {
                   >
                     Show interest
                   </motion.button>
-                  <p className="text-[13px] md:text-[14px] font-medium text-[#102142]/70 flex items-center justify-start gap-2 mt-3.5 w-full md:px-1">
+                  <p className="text-[13px] md:text-[14px] font-medium text-[#102142]/70 flex items-center justify-center md:justify-start gap-2 mt-3.5 w-full md:px-1">
                     <Mail className="w-[18px] h-[18px] opacity-60" strokeWidth={1.5} />
                     Be the first to know when we launch
                   </p>
@@ -184,13 +184,24 @@ export default function App() {
           </div>
 
           <div 
-            className="flex md:grid flex-row md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-4 md:gap-6 lg:gap-8 w-full mt-4 pb-6 md:pb-0 scrollbar-hide -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0"
+            className="flex md:grid flex-row md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-4 md:gap-6 lg:gap-8 w-auto md:w-full mt-4 pb-6 md:pb-0 scrollbar-hide -mx-4 px-[7.5vw] sm:-mx-6 sm:px-[7.5vw] md:mx-0 md:px-0"
+            style={{ WebkitOverflowScrolling: 'touch' }}
             onScroll={(e) => {
               if (window.innerWidth < 768) {
                 const scrollLeft = e.currentTarget.scrollLeft;
-                const childWidth = (e.currentTarget.firstChild as HTMLElement)?.offsetWidth || window.innerWidth * 0.85;
-                const index = Math.round(scrollLeft / childWidth);
-                setProblemActiveIndex(Math.min(PROBLEM_CARDS.length - 1, Math.max(0, index)));
+                const parentCenter = scrollLeft + e.currentTarget.clientWidth / 2;
+                const children = Array.from(e.currentTarget.children) as HTMLElement[];
+                let closestIndex = 0;
+                let minDiff = Infinity;
+                children.forEach((child, idx) => {
+                  const childCenter = child.offsetLeft + child.offsetWidth / 2;
+                  const diff = Math.abs(childCenter - parentCenter);
+                  if (diff < minDiff) {
+                    minDiff = diff;
+                    closestIndex = idx;
+                  }
+                });
+                setProblemActiveIndex(closestIndex);
               }
             }}
           >
@@ -202,7 +213,7 @@ export default function App() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ delay: idx * 0.15, duration: 0.6, type: "spring", bounce: 0.4 }} 
-                    className="relative w-[85vw] md:w-full shrink-0 snap-center rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1"
+                    className="relative w-[85vw] md:w-full shrink-0 snap-center snap-always rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1"
                  >
                     {/* Top: Image Container */}
                     <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 md:mb-4 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
