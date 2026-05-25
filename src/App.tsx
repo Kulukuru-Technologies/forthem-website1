@@ -145,7 +145,7 @@ export default function App() {
           </div>
 
           {/* Right Column / Background - Graphic */}
-          <div className="relative flex-1 w-full md:absolute md:inset-0 z-0 order-2 md:order-none flex items-center justify-center -mt-8 md:mt-0">
+          <div className="relative flex-1 w-full md:absolute md:inset-0 z-0 order-2 md:order-none flex items-center justify-center mt-2 md:mt-0">
             {/* Mobile / Tablet Image (< 768px) */}
             <img 
               src="/bg-mobile.png" 
