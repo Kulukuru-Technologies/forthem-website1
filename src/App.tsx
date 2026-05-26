@@ -148,17 +148,17 @@ export default function App() {
           <div className="relative flex-1 w-full md:absolute md:inset-0 z-0 order-2 md:order-none flex items-center justify-center mt-2 md:mt-0">
             {/* Mobile / Tablet Image (< 768px) */}
             <img 
-              src="/bg-mobile.png" 
+              src="/bg-mobile.webp" 
               alt="Child's Future Investment Illustration Mobile"
               className="block md:hidden relative w-full h-auto max-h-[45vh] object-contain object-bottom overflow-visible"
               onError={(e) => {
-                (e.target as HTMLImageElement).src = '/bg.png';
+                (e.target as HTMLImageElement).src = '/bg.webp';
               }}
               referrerPolicy="no-referrer"
             />
             {/* Desktop Image (>= 768px) */}
             <img 
-              src="/bg.png" 
+              src="/bg.webp" 
               alt="Child's Future Investment Illustration Desktop"
               className="hidden md:block absolute inset-0 w-full h-full object-cover object-[center_center]"
               onError={(e) => {
