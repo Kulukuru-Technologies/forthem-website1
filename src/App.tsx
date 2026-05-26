@@ -100,7 +100,7 @@ export default function App() {
           
           {/* Left Column - Text Content */}
           <div className="w-full mx-auto px-6 sm:px-8 md:px-16 lg:px-24 pt-24 lg:pt-32 pb-4 md:pb-0 relative z-20 order-1 md:order-none pointer-events-none flex flex-col justify-center h-full">
-            <div className="flex flex-col items-start w-full md:w-[60%] lg:w-[50%] xl:w-[45%] pointer-events-auto text-left mt-2 md:mt-4 lg:mt-[-1rem]">
+            <div className="flex flex-col items-start w-full md:w-[60%] lg:w-[50%] xl:w-[45%] pointer-events-auto text-left -mt-2 md:-mt-4 lg:-mt-8">
               <motion.h1 
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -114,7 +114,7 @@ export default function App() {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-[16px] md:text-[18px] text-[#102142] max-w-xl mb-8 font-normal text-left leading-[1.5]"
+                className="text-[16px] md:text-[18px] text-[#102142] max-w-xl mb-8 font-normal font-sans text-left leading-[22px]"
               >
                 You want to give your child a stronger start in life. <br /> We help you make it happen.
               </motion.p>
@@ -131,7 +131,7 @@ export default function App() {
                     onClick={() => setIsModalOpen(true)}
                     whileHover={{ scale: 1.05, backgroundColor: '#142952' }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-[#102142] text-[#FFFFFF] py-[14px] rounded-[2rem] font-bold text-[17px] shadow-md hover:bg-[#142952] hover:shadow-lg transition-all flex items-center justify-center gap-3 w-[260px] md:w-[310px]"
+                    className="bg-[#102142] text-[#FFFFFF] h-[43.5px] w-[286px] rounded-[2rem] font-bold text-[17px] shadow-md hover:bg-[#142952] hover:shadow-lg transition-all flex items-center justify-center gap-3"
                   >
                     Show interest
                   </motion.button>
