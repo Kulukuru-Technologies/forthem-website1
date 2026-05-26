@@ -6,17 +6,17 @@ const PROBLEM_CARDS = [
   {
     title: "Built without a plan",
     explanation: "No defined goal, clear path, or view of progress.",
-    image: "/card1.png"
+    image: "/card1.webp"
   },
   {
     title: "Competes with everything else",
     explanation: "Gets mixed into your own finances, competing with every other priority and losing its original purpose.",
-    image: "/card2.png"
+    image: "/card2.webp"
   },
   {
     title: "Still just savings",
     explanation: "Can remain money on paper, instead of real support when life choices begin.",
-    image: "/card3.png"
+    image: "/card3.webp"
   }
 ];
 
@@ -335,7 +335,7 @@ export default function App() {
             {/* Pillar 1: One clear system */}
             <div className="relative w-full rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1">
               <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-2 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
-                 <img src="/pillar1.png" alt="One clear system" className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" />
+                 <img src="/pillar1.webp" alt="One clear system" className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" />
               </div>
               <div className="flex flex-col px-2 pb-2 flex-1 relative z-10">
                 <h3 className="text-base md:text-lg font-black text-[#102142] mb-1 tracking-tight">One clear system</h3>
@@ -348,7 +348,7 @@ export default function App() {
             {/* Pillar 2: Truly dedicated for them */}
             <div className="relative w-full rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1">
               <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-2 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
-                 <img src="/pillar2.png" alt="Truly dedicated for them" className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" />
+                 <img src="/pillar2.webp" alt="Truly dedicated for them" className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" />
               </div>
               <div className="flex flex-col px-2 pb-2 flex-1 relative z-10">
                 <h3 className="text-base md:text-lg font-black text-[#102142] mb-1 tracking-tight">Truly dedicated for them</h3>
@@ -361,7 +361,7 @@ export default function App() {
             {/* Pillar 3: There when it matters most */}
             <div className="relative w-full rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1">
               <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-2 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
-                 <img src="/pillar3.png" alt="There when it matters most" className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" />
+                 <img src="/pillar3.webp" alt="There when it matters most" className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" />
               </div>
               <div className="flex flex-col px-2 pb-2 flex-1 relative z-20">
                 <h3 className="text-base md:text-lg font-black text-[#102142] mb-1 tracking-tight">There when it matters most</h3>
