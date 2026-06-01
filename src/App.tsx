@@ -20,12 +20,54 @@ const PROBLEM_CARDS = [
   }
 ];
 
+const APPROACH_CARDS = [
+  {
+    title: "One clear system",
+    explanation: "All in one place with a clear goal, plan, and progress you can track.",
+    image: "/pillar1.webp"
+  },
+  {
+    title: "Truly dedicated for them",
+    explanation: "Separate from everyday finances and meant only for your child.",
+    image: "/pillar2.webp"
+  },
+  {
+    title: "There when it matters most",
+    explanation: "Designed to support your child in life’s key moments and through the unexpected.",
+    image: "/pillar3.webp"
+  }
+];
+
+const TRUST_CARDS = [
+  {
+    title: "Regulated partners",
+    explanation: "We work only with RBI / SEBI regulated entities.",
+    icon: Building2
+  },
+  {
+    title: "Bank-grade security",
+    explanation: "Your data is protected using strong security standards.",
+    icon: Lock
+  },
+  {
+    title: "Never in our accounts",
+    explanation: "Your money moves directly to regulated partner accounts, never ours.",
+    icon: ShieldCheck
+  },
+  {
+    title: "Transparent fees",
+    explanation: "No hidden charges at any step.",
+    icon: Eye
+  }
+];
+
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
   const [problemActiveIndex, setProblemActiveIndex] = useState(0);
+  const [approachActiveIndex, setApproachActiveIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   
@@ -331,46 +373,72 @@ export default function App() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-2">
-            {/* Pillar 1: One clear system */}
-            <div className="relative w-full rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1">
-              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-2 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
-                 <img src="/pillar1.webp" alt="One clear system" className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" />
-              </div>
-              <div className="flex flex-col px-2 pb-2 flex-1 relative z-10">
-                <h3 className="text-base md:text-lg font-black text-[#102142] mb-1 tracking-tight">One clear system</h3>
-                <p className="text-gray-500 text-sm font-medium leading-relaxed">
-                  All in one place with a clear goal, plan, and progress you can track.
-                </p>
-              </div>
-            </div>
+          <div 
+            className="flex md:grid flex-row md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-4 md:gap-6 lg:gap-8 w-auto md:w-full mt-4 pb-6 md:pb-0 scrollbar-hide -mx-4 px-[7.5vw] sm:-mx-6 sm:px-[7.5vw] md:mx-0 md:px-0"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+            onScroll={(e) => {
+              if (window.innerWidth < 768) {
+                const scrollLeft = e.currentTarget.scrollLeft;
+                const parentCenter = scrollLeft + e.currentTarget.clientWidth / 2;
+                const children = Array.from(e.currentTarget.children) as HTMLElement[];
+                let closestIndex = 0;
+                let minDiff = Infinity;
+                children.forEach((child, idx) => {
+                  const childCenter = child.offsetLeft + child.offsetWidth / 2;
+                  const diff = Math.abs(childCenter - parentCenter);
+                  if (diff < minDiff) {
+                    minDiff = diff;
+                    closestIndex = idx;
+                  }
+                });
+                setApproachActiveIndex(closestIndex);
+              }
+            }}
+          >
+            {APPROACH_CARDS.map((card, idx) => {
+               return (
+                 <motion.div 
+                    key={idx}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ delay: idx * 0.15, duration: 0.6, type: "spring", bounce: 0.4 }} 
+                    className="relative w-[85vw] md:w-full shrink-0 snap-center snap-always rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1"
+                 >
+                    {/* Top: Image Container */}
+                    <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-2 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
+                      <img 
+                         src={card.image} 
+                         alt={card.title} 
+                         className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" 
+                         referrerPolicy="no-referrer" 
+                      />
+                    </div>
+                    
+                    {/* Bottom: Text Content */}
+                    <div className="flex flex-col px-2 pb-2 flex-1 relative z-10">
+                       <h3 className="text-base md:text-lg font-black text-[#102142] mb-1 tracking-tight">
+                         {card.title}
+                       </h3>
+                       <p className="text-gray-500 text-sm font-medium leading-relaxed">
+                         {card.explanation}
+                       </p>
+                    </div>
+                 </motion.div>
+               );
+            })}
+          </div>
 
-            {/* Pillar 2: Truly dedicated for them */}
-            <div className="relative w-full rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1">
-              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-2 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
-                 <img src="/pillar2.webp" alt="Truly dedicated for them" className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" />
-              </div>
-              <div className="flex flex-col px-2 pb-2 flex-1 relative z-10">
-                <h3 className="text-base md:text-lg font-black text-[#102142] mb-1 tracking-tight">Truly dedicated for them</h3>
-                <p className="text-gray-500 text-sm font-medium leading-relaxed">
-                  Separate from everyday finances and meant only for your child.
-                </p>
-              </div>
-            </div>
-
-            {/* Pillar 3: There when it matters most */}
-            <div className="relative w-full rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1">
-              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-2 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
-                 <img src="/pillar3.webp" alt="There when it matters most" className="absolute inset-0 w-full h-full object-cover scale-[1.15] mix-blend-multiply origin-top" />
-              </div>
-              <div className="flex flex-col px-2 pb-2 flex-1 relative z-20">
-                <h3 className="text-base md:text-lg font-black text-[#102142] mb-1 tracking-tight">There when it matters most</h3>
-                <p className="text-gray-500 text-sm font-medium leading-relaxed">
-                  Designed to support your child in life’s key moments and through the unexpected.
-                </p>
-              </div>
-            </div>
-
+          {/* Mobile Pagination Dots */}
+          <div className="flex md:hidden justify-center items-center gap-2 mt-0 mb-4">
+            {APPROACH_CARDS.map((_, idx) => (
+              <div 
+                key={idx} 
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  approachActiveIndex === idx ? "w-6 bg-[#102142]" : "w-1.5 bg-[#102142]/20"
+                }`}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -390,76 +458,30 @@ export default function App() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-12">
-              
-              {/* Card 1: Regulated Partners */}
-              <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: 0.1, duration: 0.5 }}
-                className="relative overflow-hidden flex flex-col items-center text-center p-8 rounded-[32px] bg-[#FFFFFF]  border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_16px_48px_rgba(30,75,153,0.1)] hover:-translate-y-1"
-              >
-                <div className="w-16 h-16 rounded-full bg-[#1E4B99]/10 flex items-center justify-center mb-6 relative z-10">
-                  <Building2 className="w-8 h-8 text-[#1E4B99]" strokeWidth={2} />
-                </div>
-                <h3 className="text-xl font-bold text-[#102142] mb-3 relative z-10">Regulated partners</h3>
-                <p className="text-gray-500 font-medium leading-relaxed relative z-10">
-                  We work only with RBI / SEBI regulated entities.
-                </p>
-              </motion.div>
-
-              {/* Card 2: Bank-grade Security */}
-              <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-                className="relative overflow-hidden flex flex-col items-center text-center p-8 rounded-[32px] bg-[#FFFFFF]  border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_16px_48px_rgba(30,75,153,0.1)] hover:-translate-y-1"
-              >
-                <div className="w-16 h-16 rounded-full bg-[#1E4B99]/10 flex items-center justify-center mb-6 relative z-10">
-                  <Lock className="w-8 h-8 text-[#1E4B99]" strokeWidth={2} />
-                </div>
-                <h3 className="text-xl font-bold text-[#102142] mb-3 relative z-10">Bank-grade security</h3>
-                <p className="text-gray-500 font-medium leading-relaxed relative z-10">
-                  Your data is protected using strong security standards.
-                </p>
-              </motion.div>
-
-              {/* Card 3: Never in our accounts */}
-              <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className="relative overflow-hidden flex flex-col items-center text-center p-8 rounded-[32px] bg-[#FFFFFF]  border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_16px_48px_rgba(30,75,153,0.1)] hover:-translate-y-1"
-              >
-                <div className="w-16 h-16 rounded-full bg-[#1E4B99]/10 flex items-center justify-center mb-6 relative z-10">
-                  <ShieldCheck className="w-8 h-8 text-[#1E4B99]" strokeWidth={2} />
-                </div>
-                <h3 className="text-xl font-bold text-[#102142] mb-3 relative z-10">Never in our accounts</h3>
-                <p className="text-gray-500 font-medium leading-relaxed relative z-10">
-                  Your money moves directly to regulated partner accounts, never ours.
-                </p>
-              </motion.div>
-
-              {/* Card 4: Transparent fees */}
-              <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-                className="relative overflow-hidden flex flex-col items-center text-center p-8 rounded-[32px] bg-[#FFFFFF]  border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_16px_48px_rgba(30,75,153,0.1)] hover:-translate-y-1"
-              >
-                <div className="w-16 h-16 rounded-full bg-[#1E4B99]/10 flex items-center justify-center mb-6 relative z-10">
-                  <Eye className="w-8 h-8 text-[#1E4B99]" strokeWidth={2} />
-                </div>
-                <h3 className="text-xl font-bold text-[#102142] mb-3 relative z-10">Transparent fees</h3>
-                <p className="text-gray-500 font-medium leading-relaxed relative z-10">
-                  No hidden charges at any step.
-                </p>
-              </motion.div>
-
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-8 md:mb-12">
+              {TRUST_CARDS.map((card, idx) => {
+                const IconComponent = card.icon;
+                return (
+                  <motion.div 
+                    key={idx}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ delay: idx * 0.1, duration: 0.6, type: "spring", bounce: 0.4 }}
+                    className="relative overflow-hidden flex flex-col items-center text-center p-3 sm:p-6 lg:p-8 rounded-[1.5rem] bg-[#FFFFFF] border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-500 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] hover:-translate-y-1 group"
+                  >
+                    <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-[#1E4B99]/10 flex items-center justify-center mb-4 sm:mb-6 relative z-10 transition-transform duration-500 group-hover:scale-110">
+                      <IconComponent className="w-5 h-5 sm:w-8 sm:h-8 text-[#1E4B99]" strokeWidth={2} />
+                    </div>
+                    <h3 className="text-sm sm:text-lg md:text-xl font-bold text-[#102142] mb-1 sm:mb-3 relative z-10 tracking-tight leading-tight">
+                      {card.title}
+                    </h3>
+                    <p className="text-[#64748B] text-[11px] sm:text-sm md:text-base font-medium leading-relaxed relative z-10">
+                      {card.explanation}
+                    </p>
+                  </motion.div>
+                );
+              })}
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-center mb-8">
