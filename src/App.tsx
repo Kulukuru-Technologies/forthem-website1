@@ -107,7 +107,7 @@ export default function App() {
               <div 
                 className={`w-full flex items-center justify-between transition-all duration-300 ease-in-out mx-auto ${
                   isScrolled 
-                    ? 'bg-[#FFFFFF] rounded-[50px] px-5 py-2.5 md:px-8 md:py-3 shadow-[0_12px_40px_rgba(0,0,0,0.08)] border border-black/5' 
+                    ? 'bg-[#FFFFFF] rounded-[50px] px-4 py-2 md:px-8 md:py-3 shadow-[0_12px_40px_rgba(0,0,0,0.08)] border border-black/5' 
                     : 'bg-transparent rounded-none px-6 sm:px-8 md:px-16 lg:px-24 py-4 md:py-6 shadow-none border border-transparent'
                 }`}
                 style={{
@@ -115,21 +115,21 @@ export default function App() {
                 }}
               >
                 <div className="flex items-center relative z-20">
-                  <img src="logo.png" alt="ForThem Logo" className={`w-auto object-contain mix-blend-multiply transition-all duration-500 flex-shrink-0 ${isScrolled ? 'h-9 md:h-12' : 'h-16 md:h-[80px] lg:h-[100px]'}`} />
+                  <img src="logo.png" alt="ForThem Logo" className={`w-auto object-contain mix-blend-multiply transition-all duration-500 flex-shrink-0 ${isScrolled ? 'h-6 sm:h-8 md:h-12' : 'h-16 md:h-[80px] lg:h-[100px]'}`} />
                 </div>
                 
                 <div className="flex items-center relative z-20">
                    <button
                      onClick={() => setIsModalOpen(true)}
-                     className={`transition-all duration-300 ease-in-out flex items-center gap-2 font-bold ${
+                     className={`transition-all duration-300 ease-in-out flex items-center gap-1.5 font-bold ${
                        isScrolled 
-                         ? 'opacity-100 translate-y-0 pointer-events-auto bg-[#173973] text-[#FFFFFF] px-5 py-2.5 rounded-full text-sm shadow-md hover:bg-[#1B4388] hover:shadow-lg' 
-                         : 'opacity-0 translate-y-2 pointer-events-none bg-transparent text-[#102142] px-6 py-2.5 rounded-full text-sm'
+                         ? 'opacity-100 translate-y-0 pointer-events-auto bg-[#173973] text-[#FFFFFF] px-3.5 py-1.5 md:px-5 md:py-2.5 rounded-full text-xs md:text-sm shadow-md hover:bg-[#1B4388] hover:shadow-lg' 
+                         : 'opacity-0 translate-y-2 pointer-events-none bg-transparent text-[#102142] px-6 py-2.5 rounded-full text-xs md:text-sm'
                      }`}
                      aria-hidden={!isScrolled}
                    >
                      Show interest
-                     <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${isScrolled ? 'translate-x-0' : 'translate-x-0.5'}`} />
+                     <ChevronRight className={`w-3.5 h-3.5 md:w-4 md:h-4 transition-transform duration-300 ${isScrolled ? 'translate-x-0' : 'translate-x-0.5'}`} />
                    </button>
                 </div>
               </div>
