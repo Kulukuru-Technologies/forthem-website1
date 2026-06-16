@@ -62,7 +62,6 @@ const TRUST_CARDS = [
 ];
 
 export default function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
   const [problemActiveIndex, setProblemActiveIndex] = useState(0);
@@ -96,6 +95,14 @@ export default function App() {
     }, 4000);
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
+
+  // Scroll to CTA section
+  const scrollToCTA = () => {
+    const ctaSection = document.getElementById('cta-section');
+    if (ctaSection) {
+      ctaSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   // Handle email capture and submit to Netlify
   const handleEmailCapture = async () => {
@@ -176,10 +183,7 @@ export default function App() {
                 
                 <div className="flex items-center relative z-20">
                    <button
-                     onClick={() => {
-                       setIsModalOpen(true);
-                       resetForm();
-                     }}
+                     onClick={scrollToCTA}
                      className={`transition-all duration-300 ease-in-out flex items-center gap-1.5 font-bold ${
                        isScrolled 
                          ? 'opacity-100 translate-y-0 pointer-events-auto bg-[#173973] text-[#FFFFFF] px-3.5 py-1.5 md:px-5 md:py-2.5 rounded-full text-xs md:text-sm shadow-md hover:bg-[#1B4388]'
@@ -229,10 +233,7 @@ export default function App() {
               >
                 <div className="flex flex-col items-center md:items-start w-fit">
                   <motion.button
-                    onClick={() => {
-                      setIsModalOpen(true);
-                      resetForm();
-                    }}
+                    onClick={scrollToCTA}
                     whileHover={{ scale: 1.05, backgroundColor: '#142952' }}
                     whileTap={{ scale: 0.95 }}
                     className="bg-[#102142] text-[#FFFFFF] h-[43.5px] w-[286px] rounded-[2rem] font-bold text-[17px] shadow-md hover:bg-[#142952] hover:shadow-lg transition-all flex items-center justify-center gap-2"
@@ -779,103 +780,6 @@ export default function App() {
         </footer>
 
       </main>
-
-      {/* Form Modal */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-[#102142]/90 "
-            />
-            <motion.div 
-              initial={{ y: 50, opacity: 0, scale: 0.95 }}
-              animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={{ y: 50, opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-lg bg-[#FFFFFF] rounded-3xl shadow-2xl overflow-hidden"
-            >
-              <button 
-                onClick={() => setIsModalOpen(false)}
-                className="absolute top-6 right-6 p-2 text-gray-400 hover:text-gray-900 transition-colors"
-               >
-                 <X className="w-5 h-5" />
-              </button>
-
-              <div className="p-8 md:p-10">
-                <>
-                  <div className="mb-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2">
-                      <span className="text-[#173973]">✓</span> Thanks for showing interest.
-                    </h2>
-                    <p className="text-gray-500 font-medium">Share a few details so we can learn from parents like you and build ForThem thoughtfully.</p>
-                  </div>
-
-                  <form className="space-y-4" name="contact" method="POST" data-netlify="true" onSubmit={handleFormSubmit}>
-                    <input type="hidden" name="form-name" value="contact" />
-                    <div className="relative">
-                      <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                      <input 
-                        required
-                        name="name"
-                        type="text" 
-                        placeholder="Your name" 
-                        value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] transition-all"
-                      />
-                    </div>
-                    
-                    <div className="relative">
-                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                      <input 
-                        required
-                        name="mobile"
-                        type="tel" 
-                        placeholder="Mobile number (+91)" 
-                        value={formData.mobile}
-                        onChange={(e) => setFormData({...formData, mobile: e.target.value})}
-                        className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] transition-all"
-                      />
-                    </div>
-
-                    <div className="relative">
-                      <Baby className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                      <select 
-                        name="age_bracket" 
-                        required 
-                        value={formData.age_bracket}
-                        onChange={(e) => setFormData({...formData, age_bracket: e.target.value})}
-                        className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] transition-all appearance-none"
-                      >
-                        <option value="">Child age bracket</option>
-                        <option value="0-5">0 - 5 years</option>
-                        <option value="6-12">6 - 12 years</option>
-                        <option value="13-17">13 - 17 years</option>
-                        <option value="18+">18+ years</option>
-                      </select>
-                    </div>
-
-                    <button 
-                      type="submit"
-                      className="w-full bg-[#173973] text-[#FFFFFF] py-4 rounded-2xl font-bold text-base shadow-xl shadow-[#173973]/20 hover:bg-[#1B4388] hover:shadow-2xl transition-all mt-4 flex items-center justify-center gap-2"
-                    >
-                      Submit details
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-                    
-                    <p className="text-center text-xs font-medium text-gray-400 mt-4 leading-relaxed px-4">
-                      We respect your privacy. Your details will only be used for relevant updates and access to ForThem.
-                    </p>
-                  </form>
-                </>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
