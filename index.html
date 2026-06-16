@@ -6,7 +6,12 @@
     <title>My Google AI Studio App</title>
   </head>
   <body>
-    <!-- Hidden form for Netlify to detect the form fields used in the React app -->
+    <!-- Email capture form for Netlify to detect -->
+    <form name="email-capture" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="email" name="email" />
+    </form>
+    
+    <!-- Contact form for Netlify to detect (used for full details submission) -->
     <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input type="text" name="name" />
       <input type="email" name="email" />
@@ -17,4 +22,3 @@
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-
