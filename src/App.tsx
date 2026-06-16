@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ChevronRight, Mail, X, User, Phone, MapPin, Baby, Target, Briefcase, CircleDashed, Building2, Lock, ShieldCheck, Eye, FileText, Award, TrendingUp, Shield, LogIn, ClipboardCheck, Wallet, ArrowRight, Star, CheckCircle2 } from "lucide-react";
+import { ChevronRight, Mail, X, User, Phone, MapPin, Baby, Target, Briefcase, CircleDashed, Building2, Lock, ShieldCheck, Eye, FileText, Award, TrendingUp, Shield, LogIn, ClipboardCheck, Wallet, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const PROBLEM_CARDS = [
   {
@@ -33,7 +33,7 @@ const APPROACH_CARDS = [
   },
   {
     title: "There when it matters most",
-    explanation: "Designed to support your child in life’s key moments and through the unexpected.",
+    explanation: "Designed to support your child in life's key moments and through the unexpected.",
     image: "/pillar3.webp"
   }
 ];
@@ -63,7 +63,6 @@ const TRUST_CARDS = [
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
   const [problemActiveIndex, setProblemActiveIndex] = useState(0);
@@ -71,7 +70,12 @@ export default function App() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   
-  const [ctaEmail, setCtaEmail] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    name: "",
+    mobile: "",
+    age_bracket: ""
+  });
   const [ctaStep, setCtaStep] = useState<'initial' | 'form' | 'success'>('initial');
 
   useEffect(() => {
@@ -79,6 +83,7 @@ export default function App() {
     if (ctaStep === 'success') {
       timer = setTimeout(() => {
         setCtaStep('initial');
+        setFormData({ email: "", name: "", mobile: "", age_bracket: "" });
       }, 10000);
     }
     return () => clearTimeout(timer);
@@ -91,6 +96,57 @@ export default function App() {
     }, 4000);
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
+
+  // Handle email capture and submit to Netlify
+  const handleEmailCapture = async () => {
+    if (!formData.email.includes('@')) {
+      alert('Please enter a valid email');
+      return;
+    }
+
+    try {
+      // Submit email capture to Netlify's email-capture form
+      const emailFormData = new FormData();
+      emailFormData.append('form-name', 'email-capture');
+      emailFormData.append('email', formData.email);
+
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(emailFormData as any).toString(),
+      });
+
+      // Move to details form
+      setCtaStep('form');
+      document.getElementById('cta-section')?.scrollIntoView({ behavior: 'smooth' });
+    } catch (error) {
+      console.error('Error capturing email:', error);
+    }
+  };
+
+  // Handle full form submission
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      // Submit all details to Netlify's contact form
+      const fullFormData = new FormData(e.currentTarget);
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(fullFormData as any).toString(),
+      });
+
+      setCtaStep('success');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };
+
+  const resetForm = () => {
+    setCtaStep('initial');
+    setFormData({ email: "", name: "", mobile: "", age_bracket: "" });
+  };
 
   return (
     <div className="fixed inset-0 bg-[#fffdf7] p-2 md:p-3 font-sans selection:bg-[#1E4B99]/30 overflow-hidden flex flex-col">
@@ -115,15 +171,18 @@ export default function App() {
                 }}
               >
                 <div className="flex items-center relative z-20">
-                  <img src="logo.png" alt="ForThem Logo" className={`w-auto object-contain mix-blend-multiply transition-all duration-500 flex-shrink-0 ${isScrolled ? 'h-6 sm:h-8 md:h-12' : 'h-16 md:h-[80px] lg:h-[100px]'}`} />
+                  <img src="logo.png" alt="ForThem Logo" className={`w-auto object-contain mix-blend-multiply transition-all duration-500 flex-shrink-0 ${isScrolled ? 'h-6 sm:h-8 md:h-12' : 'h-16'}`} />
                 </div>
                 
                 <div className="flex items-center relative z-20">
                    <button
-                     onClick={() => setIsModalOpen(true)}
+                     onClick={() => {
+                       setIsModalOpen(true);
+                       resetForm();
+                     }}
                      className={`transition-all duration-300 ease-in-out flex items-center gap-1.5 font-bold ${
                        isScrolled 
-                         ? 'opacity-100 translate-y-0 pointer-events-auto bg-[#173973] text-[#FFFFFF] px-3.5 py-1.5 md:px-5 md:py-2.5 rounded-full text-xs md:text-sm shadow-md hover:bg-[#1B4388] hover:shadow-lg' 
+                         ? 'opacity-100 translate-y-0 pointer-events-auto bg-[#173973] text-[#FFFFFF] px-3.5 py-1.5 md:px-5 md:py-2.5 rounded-full text-xs md:text-sm shadow-md hover:bg-[#1B4388]'
                          : 'opacity-0 translate-y-2 pointer-events-none bg-transparent text-[#102142] px-6 py-2.5 rounded-full text-xs md:text-sm'
                      }`}
                      aria-hidden={!isScrolled}
@@ -170,10 +229,13 @@ export default function App() {
               >
                 <div className="flex flex-col items-center md:items-start w-fit">
                   <motion.button
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => {
+                      setIsModalOpen(true);
+                      resetForm();
+                    }}
                     whileHover={{ scale: 1.05, backgroundColor: '#142952' }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-[#102142] text-[#FFFFFF] h-[43.5px] w-[286px] rounded-[2rem] font-bold text-[17px] shadow-md hover:bg-[#142952] hover:shadow-lg transition-all flex items-center justify-center gap-3"
+                    className="bg-[#102142] text-[#FFFFFF] h-[43.5px] w-[286px] rounded-[2rem] font-bold text-[17px] shadow-md hover:bg-[#142952] hover:shadow-lg transition-all flex items-center justify-center gap-2"
                   >
                     Show interest
                   </motion.button>
@@ -218,15 +280,15 @@ export default function App() {
           
           <div className="mx-auto max-w-3xl text-center mb-6 md:mb-8">
             <h2 className="text-3xl md:text-4xl font-black text-[#102142] tracking-tight mb-3 leading-tight">
-              Are your savings actually becoming your child’s financial base?
+              Are your savings actually becoming your child's financial base?
             </h2>
             <p className="text-base md:text-lg text-gray-500 font-medium leading-relaxed max-w-2xl mx-auto">
-              Money meant for your child is often scattered, mixed with your own finances, and doesn’t reach them when it matters most.
+              Money meant for your child is often scattered, mixed with your own finances, and doesn't reach them when it matters most.
             </p>
           </div>
 
           <div 
-            className="flex md:grid flex-row md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-4 md:gap-6 lg:gap-8 w-auto md:w-full mt-4 pb-6 md:pb-0 scrollbar-hide -mx-4 px-[7.5vw] sm:-mx-6 sm:px-[7.5vw] md:mx-0 md:px-0"
+            className="flex md:grid flex-row md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-4 md:gap-6 lg:gap-8 w-auto md:w-full mt-4 pb-6 md:pb-0 scrollbar-hide"
             style={{ WebkitOverflowScrolling: 'touch' }}
             onScroll={(e) => {
               if (window.innerWidth < 768) {
@@ -255,7 +317,7 @@ export default function App() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ delay: idx * 0.15, duration: 0.6, type: "spring", bounce: 0.4 }} 
-                    className="relative w-[85vw] md:w-full shrink-0 snap-center snap-always rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1"
+                    className="relative w-[85vw] md:w-full shrink-0 snap-center snap-always rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col"
                  >
                     {/* Top: Image Container */}
                     <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3 md:mb-4 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
@@ -327,7 +389,7 @@ export default function App() {
                 </div>
                 <div className="flex flex-col items-center justify-center min-w-[260px]">
                   <span className="text-4xl md:text-5xl font-black text-[#1E4B99] mb-2 tracking-tighter">81<span className="text-3xl text-[#173973]">%</span></span>
-                  <span className="text-sm font-bold text-[#FFFFFF] whitespace-normal text-center leading-tight">didn’t achieve the financial base they planned</span>
+                  <span className="text-sm font-bold text-[#FFFFFF] whitespace-normal text-center leading-tight">didn't achieve the financial base they planned</span>
                 </div>
                 <div className="flex flex-col items-center justify-center min-w-[240px]">
                   <span className="text-4xl md:text-5xl font-black text-[#1E4B99] mb-2 tracking-tighter">93<span className="text-3xl text-[#173973]">%</span></span>
@@ -347,7 +409,7 @@ export default function App() {
                 </div>
                 <div className="flex flex-col items-center justify-center min-w-[260px]">
                   <span className="text-4xl md:text-5xl font-black text-[#1E4B99] mb-2 tracking-tighter">81<span className="text-3xl text-[#173973]">%</span></span>
-                  <span className="text-sm font-bold text-[#FFFFFF] whitespace-normal text-center leading-tight">didn’t achieve the financial base they planned</span>
+                  <span className="text-sm font-bold text-[#FFFFFF] whitespace-normal text-center leading-tight">didn't achieve the financial base they planned</span>
                 </div>
                 <div className="flex flex-col items-center justify-center min-w-[240px]">
                   <span className="text-4xl md:text-5xl font-black text-[#1E4B99] mb-2 tracking-tighter">93<span className="text-3xl text-[#173973]">%</span></span>
@@ -374,7 +436,7 @@ export default function App() {
           </div>
 
           <div 
-            className="flex md:grid flex-row md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-4 md:gap-6 lg:gap-8 w-auto md:w-full mt-4 pb-6 md:pb-0 scrollbar-hide -mx-4 px-[7.5vw] sm:-mx-6 sm:px-[7.5vw] md:mx-0 md:px-0"
+            className="flex md:grid flex-row md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-4 md:gap-6 lg:gap-8 w-auto md:w-full mt-4 pb-6 md:pb-0 scrollbar-hide"
             style={{ WebkitOverflowScrolling: 'touch' }}
             onScroll={(e) => {
               if (window.innerWidth < 768) {
@@ -403,7 +465,7 @@ export default function App() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ delay: idx * 0.15, duration: 0.6, type: "spring", bounce: 0.4 }} 
-                    className="relative w-[85vw] md:w-full shrink-0 snap-center snap-always rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col z-10 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] transition-all duration-500 group hover:-translate-y-1"
+                    className="relative w-[85vw] md:w-full shrink-0 snap-center snap-always rounded-[1.5rem] bg-[#FFFFFF] p-2.5 border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex flex-col"
                  >
                     {/* Top: Image Container */}
                     <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-2 shrink-0 group-hover:scale-[0.98] transition-transform duration-500">
@@ -468,7 +530,7 @@ export default function App() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ delay: idx * 0.1, duration: 0.6, type: "spring", bounce: 0.4 }}
-                    className="relative overflow-hidden flex flex-col items-center text-center p-3 sm:p-6 lg:p-8 rounded-[1.5rem] bg-[#FFFFFF] border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-500 hover:shadow-[0_16px_48px_rgba(30,75,153,0.12)] hover:-translate-y-1 group"
+                    className="relative overflow-hidden flex flex-col items-center text-center p-3 sm:p-6 lg:p-8 rounded-[1.5rem] bg-[#FFFFFF] border border-[#FFFFFF] shadow-[0_8px_32px_rgba(0,0,0,0.06)]"
                   >
                     <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-[#1E4B99]/10 flex items-center justify-center mb-4 sm:mb-6 relative z-10 transition-transform duration-500 group-hover:scale-110">
                       <IconComponent className="w-5 h-5 sm:w-8 sm:h-8 text-[#1E4B99]" strokeWidth={2} />
@@ -527,19 +589,14 @@ export default function App() {
                      <div className="flex flex-col sm:flex-row gap-3 p-1.5 bg-[#FFFFFF]  border border-[#FFFFFF] rounded-[24px] shadow-2xl">
                        <input 
                          type="email" 
-                         value={ctaEmail}
-                         onChange={(e) => setCtaEmail(e.target.value)}
+                         value={formData.email}
+                         onChange={(e) => setFormData({...formData, email: e.target.value})}
                          placeholder="Email address"
-                         className="flex-1 px-6 py-4 rounded-2xl bg-[#FFFFFF] focus:bg-[#FFFFFF] focus:outline-none focus:ring-4 focus:ring-blue-400/50 transition-all font-medium text-gray-900 placeholder-gray-400 text-lg shadow-inner w-full"
+                         className="flex-1 px-6 py-4 rounded-2xl bg-[#FFFFFF] focus:bg-[#FFFFFF] focus:outline-none focus:ring-4 focus:ring-blue-400/50 transition-all font-medium text-gray-900"
                        />
                        <button 
-                         onClick={() => {
-                            if(ctaEmail.includes('@')) {
-                              setCtaStep('form');
-                              document.getElementById('cta-section')?.scrollIntoView({ behavior: 'smooth' });
-                            }
-                         }}
-                         className="group bg-[#102142] text-[#FFFFFF] px-8 py-4 rounded-2xl font-bold text-lg shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:bg-[#142952] hover:shadow-[0_15px_30px_rgba(0,0,0,0.3)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3 shrink-0 whitespace-nowrap border border-[#102142]/50"
+                         onClick={handleEmailCapture}
+                         className="group bg-[#102142] text-[#FFFFFF] px-8 py-4 rounded-2xl font-bold text-lg shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:bg-[#142952] hover:shadow-[0_15px_30px_rgba(16,33,66,0.3)] transition-all flex items-center gap-2"
                        >
                          Show interest
                          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 group-hover:text-blue-400 transition-all" />
@@ -586,11 +643,19 @@ export default function App() {
                       name="contact"
                       method="POST"
                       data-netlify="true"
+                      onSubmit={handleFormSubmit}
                     >
                        <input type="hidden" name="form-name" value="contact" />
                        <div className="space-y-1.5">
                           <label className="text-sm font-bold text-slate-700">Your name</label>
-                          <input type="text" name="name" required className="w-full px-4 py-2.5 rounded-2xl border border-gray-200 bg-gray-50 focus:bg-[#FFFFFF] focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] outline-none transition-all text-[#102142] font-medium" />
+                          <input 
+                            type="text" 
+                            name="name" 
+                            required 
+                            value={formData.name}
+                            onChange={(e) => setFormData({...formData, name: e.target.value})}
+                            className="w-full px-4 py-2.5 rounded-2xl border border-gray-200 bg-gray-50 focus:bg-[#FFFFFF] focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] outline-none transition-all"
+                          />
                        </div>
                        <div className="space-y-1.5">
                           <label className="text-sm font-bold text-slate-700">Email address</label>
@@ -598,19 +663,32 @@ export default function App() {
                             type="email" 
                             name="email"
                             required 
-                            value={ctaEmail}
-                            onChange={(e) => setCtaEmail(e.target.value)}
-                            className="w-full px-4 py-2.5 rounded-2xl border border-gray-200 bg-gray-50 focus:bg-[#FFFFFF] focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] outline-none transition-all text-[#102142] font-medium" 
+                            value={formData.email}
+                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                            className="w-full px-4 py-2.5 rounded-2xl border border-gray-200 bg-gray-50 focus:bg-[#FFFFFF] focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] outline-none transition-all"
                           />
                        </div>
                        <div className="space-y-1.5">
                           <label className="text-sm font-bold text-slate-700">Mobile number (+91)</label>
-                          <input type="tel" name="mobile" required className="w-full px-4 py-2.5 rounded-2xl border border-gray-200 bg-gray-50 focus:bg-[#FFFFFF] focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] outline-none transition-all text-[#102142] font-medium" />
+                          <input 
+                            type="tel" 
+                            name="mobile" 
+                            required 
+                            value={formData.mobile}
+                            onChange={(e) => setFormData({...formData, mobile: e.target.value})}
+                            className="w-full px-4 py-2.5 rounded-2xl border border-gray-200 bg-gray-50 focus:bg-[#FFFFFF] focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] outline-none transition-all"
+                          />
                        </div>
                        <div className="space-y-1.5">
                           <label className="text-sm font-bold text-slate-700">Child age bracket</label>
                           <div className="relative">
-                             <select name="age_bracket" required className="w-full px-4 py-2.5 rounded-2xl border border-gray-200 bg-gray-50 focus:bg-[#FFFFFF] focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] outline-none transition-all text-[#102142] font-medium appearance-none">
+                             <select 
+                               name="age_bracket" 
+                               required 
+                               value={formData.age_bracket}
+                               onChange={(e) => setFormData({...formData, age_bracket: e.target.value})}
+                               className="w-full px-4 py-2.5 rounded-2xl border border-gray-200 bg-gray-50 focus:bg-[#FFFFFF] focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] outline-none transition-all appearance-none"
+                             >
                                 <option value="">Select age bracket</option>
                                 <option value="0-5">0-5 years</option>
                                 <option value="6-12">6-12 years</option>
@@ -625,7 +703,7 @@ export default function App() {
 
                        <button 
                          type="submit"
-                         className="w-full py-3.5 mt-2 bg-[#173973] hover:bg-[#1B4388] text-[#FFFFFF] rounded-2xl font-bold shadow-md shadow-[#173973]/20 active:scale-[0.98] transition-all flex justify-center items-center h-[50px] text-base"
+                         className="w-full py-3.5 mt-2 bg-[#173973] hover:bg-[#1B4388] text-[#FFFFFF] rounded-2xl font-bold shadow-md shadow-[#173973]/20 active:scale-[0.98] transition-all flex items-center justify-center"
                        >
                          Submit details
                        </button>
@@ -657,10 +735,10 @@ export default function App() {
                       Thank you for sharing your details.
                     </h2>
                     <p className="text-lg text-slate-600 font-medium mb-8">
-                       We’ll keep you updated as ForThem takes shape.
+                       We'll keep you updated as ForThem takes shape.
                     </p>
                     <button 
-                      onClick={() => setCtaStep('initial')}
+                      onClick={resetForm}
                       className="w-full py-4 bg-gray-900 hover:bg-black text-[#FFFFFF] rounded-2xl font-bold shadow-lg transition-all active:scale-[0.98] text-lg"
                     >
                       Done
@@ -691,7 +769,7 @@ export default function App() {
              
              <div className="flex flex-col items-center gap-4 border-t border-gray-200 pt-8 text-center mt-4">
                 <p className="text-[#102142]/50 text-xs max-w-3xl leading-relaxed">
-                  Financial disclaimer: Investing in securities markets is subject to market risks. Read all the related documents carefully before investing. ForThem is a technology platform and not a registered investment advisor.
+                  Financial disclaimer: Investing in securities markets is subject to market risks. Read all the related documents carefully before investing. ForThem is a technology platform and does not provide investment advice.
                 </p>
                 <p className="text-[#102142]/60 text-sm font-medium">
                   © 2026 ForThem. All rights reserved.
@@ -723,91 +801,76 @@ export default function App() {
                 onClick={() => setIsModalOpen(false)}
                 className="absolute top-6 right-6 p-2 text-gray-400 hover:text-gray-900 transition-colors"
                >
-                <X className="w-5 h-5" />
+                 <X className="w-5 h-5" />
               </button>
 
               <div className="p-8 md:p-10">
-                {!isSubmitted ? (
-                  <>
-                    <div className="mb-8">
-                      <h2 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2">
-                        <span className="text-[#173973]">✓</span> Thanks for showing interest.
-                      </h2>
-                      <p className="text-gray-500 font-medium">Share a few details so we can learn from parents like you and build ForThem thoughtfully.</p>
-                    </div>
-
-                    <form className="space-y-4" name="contact" method="POST" data-netlify="true">
-                      <input type="hidden" name="form-name" value="contact" />
-                      <div className="relative">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input 
-                          required
-                          name="name"
-                          type="text" 
-                          placeholder="Your name" 
-                          className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] transition-all font-medium text-sm"
-                        />
-                      </div>
-                      
-                      <div className="relative">
-                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input 
-                          required
-                          name="mobile"
-                          type="tel" 
-                          placeholder="Mobile number (+91)" 
-                          className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] transition-all font-medium text-sm"
-                        />
-                      </div>
-
-                      <div className="relative">
-                        <Baby className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <select name="age_bracket" required className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] transition-all font-medium text-sm appearance-none">
-                          <option value="">Child age bracket</option>
-                          <option value="0-5">0 - 5 years</option>
-                          <option value="6-12">6 - 12 years</option>
-                          <option value="13-17">13 - 17 years</option>
-                          <option value="18+">18+ years</option>
-                        </select>
-                      </div>
-
-                      <button 
-                        type="submit"
-                        className="w-full bg-[#173973] text-[#FFFFFF] py-4 rounded-2xl font-bold text-base shadow-xl shadow-[#173973]/20 hover:bg-[#1B4388] hover:shadow-2xl transition-all mt-4 flex items-center justify-center gap-2"
-                      >
-                        Submit details
-                        <ChevronRight className="w-5 h-5" />
-                      </button>
-                      
-                      <p className="text-center text-xs font-medium text-gray-400 mt-4 leading-relaxed px-4">
-                        We respect your privacy. Your details will only be used for relevant updates and access to ForThem.
-                      </p>
-                    </form>
-                  </>
-                ) : (
-                  <motion.div 
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    className="text-center py-10"
-                  >
-                    <div className="w-20 h-20 bg-blue-100 text-[#173973] rounded-full flex items-center justify-center mx-auto mb-6">
-                      <Baby className="w-10 h-10" />
-                    </div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-2">
-                       <span className="text-[#1E4B99] w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-lg">✓</span> 
-                       Thank you for sharing your details.
+                <>
+                  <div className="mb-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+                      <span className="text-[#173973]">✓</span> Thanks for showing interest.
                     </h2>
-                    <p className="text-gray-500 max-w-sm mx-auto font-medium mb-8">
-                       We’ll keep you updated as ForThem takes shape.
-                    </p>
+                    <p className="text-gray-500 font-medium">Share a few details so we can learn from parents like you and build ForThem thoughtfully.</p>
+                  </div>
+
+                  <form className="space-y-4" name="contact" method="POST" data-netlify="true" onSubmit={handleFormSubmit}>
+                    <input type="hidden" name="form-name" value="contact" />
+                    <div className="relative">
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <input 
+                        required
+                        name="name"
+                        type="text" 
+                        placeholder="Your name" 
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] transition-all"
+                      />
+                    </div>
+                    
+                    <div className="relative">
+                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <input 
+                        required
+                        name="mobile"
+                        type="tel" 
+                        placeholder="Mobile number (+91)" 
+                        value={formData.mobile}
+                        onChange={(e) => setFormData({...formData, mobile: e.target.value})}
+                        className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] transition-all"
+                      />
+                    </div>
+
+                    <div className="relative">
+                      <Baby className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <select 
+                        name="age_bracket" 
+                        required 
+                        value={formData.age_bracket}
+                        onChange={(e) => setFormData({...formData, age_bracket: e.target.value})}
+                        className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#1E4B99]/20 focus:border-[#1E4B99] transition-all appearance-none"
+                      >
+                        <option value="">Child age bracket</option>
+                        <option value="0-5">0 - 5 years</option>
+                        <option value="6-12">6 - 12 years</option>
+                        <option value="13-17">13 - 17 years</option>
+                        <option value="18+">18+ years</option>
+                      </select>
+                    </div>
+
                     <button 
-                      onClick={() => setIsModalOpen(false)}
-                      className="bg-gray-100 text-gray-800 px-8 py-3 rounded-2xl font-bold hover:bg-gray-200 transition-colors"
+                      type="submit"
+                      className="w-full bg-[#173973] text-[#FFFFFF] py-4 rounded-2xl font-bold text-base shadow-xl shadow-[#173973]/20 hover:bg-[#1B4388] hover:shadow-2xl transition-all mt-4 flex items-center justify-center gap-2"
                     >
-                      Done
+                      Submit details
+                      <ChevronRight className="w-5 h-5" />
                     </button>
-                  </motion.div>
-                )}
+                    
+                    <p className="text-center text-xs font-medium text-gray-400 mt-4 leading-relaxed px-4">
+                      We respect your privacy. Your details will only be used for relevant updates and access to ForThem.
+                    </p>
+                  </form>
+                </>
               </div>
             </motion.div>
           </div>
